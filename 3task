@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+int main() {
+	//из условия задания 1 ясно, что серия может состоять из одного эл-та
+	cout << "Completing task 3" << endl;
+	int f, k, n, m = 1, begin_ki = 0, end_ki = 0, kv = 1, beg_l, series = 0;
+	cout << "Input k = ";
+	cin >> k;
+	cout << "Input n = ";
+	cin >> n;
+	vector <int> a;
+	for (int i = 0; i < n; i++) {
+		cin >> f;
+		a.push_back(f);
+	}
+	for (int i = 1; i < n; i++) {
+		if (a[i] == a[i - 1]) {
+			m++; //количество элементов в серии
+			if (kv == k) {
+				end_ki = begin_ki + m - 1 ; //конец k-й серии
+			}
+		}
+		else if (a[i] != a[i - 1]) {
+			kv++; //номер серии
+			m = 1;
+			if (kv == k) {
+				begin_ki = i; //начало k-й серии
+				end_ki = begin_ki + m - 1;
+			}
+			beg_l = i; //начало последней серии
+		}
+	}
+	int lg = end_ki - begin_ki + 1; //длина k-ой серии
+	for (int i = 0; beg_l + i < n; i++) { //вставляем элементы последней серии на эл-ты k-ой
+		a.emplace(a.cbegin() + i + begin_ki, a[beg_l + i]);
+	}
+	a.erase(a.cbegin() + beg_l + m, a.cend()); // удаление эл-ов последней серии
+	for (int i = 0; i < lg ; i++) { //добавление k-ой серии в конец 
+		a.push_back(a[begin_ki + m + i]);
+	}
+	a.erase(a.cbegin() + begin_ki + m, a.cbegin() + begin_ki + lg + m); //удаление эл-тов k-ой серии
+	for (int i = 0; i < a.size(); i++) {
+		cout << a[i] << " ";
+	}
+	return 0;
+}
