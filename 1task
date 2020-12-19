@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+int main() {
+	int n, k = 1;
+	cout << "Completing task 1 " << endl;
+	cout << "Input n = ";
+	cin >> n;
+	vector <int> a(n);
+	vector <int> b; //массив для длин
+	vector <int> c; //массив для значений элементов
+	cout << "Input array(n) = ";
+	for (int i = 0; i < n; i++) {
+		cin >> a[i]; 
+	}
+	for (int i = 1; i < n; i++) {
+		if (a[i] == a[i - 1]) {
+			k++;
+			if (i == n - 1) {
+				b.push_back(k);
+				c.push_back(a[i - 1]);
+			}
+		}
+		if (a[i] != a[i - 1]) {
+			b.push_back(k);
+			c.push_back(a[i - 1]);
+			k = 1;
+			if (i == n - 1) {
+				b.push_back(k);
+				c.push_back(a[i]);
+			}
+		}
+	}
+	cout << "array of longs:   ";
+	for (int i = 0; i < b.size(); i++) {
+		cout << setw(3);
+		cout << b[i] << " ";
+	}
+	cout << endl;
+	cout << "array of numbers: ";
+	for (int i = 0; i < c.size(); i++) {
+		cout << setw(3);
+		cout << c[i] << " ";
+	}
+	cout << endl;
+	return 0;
+}
